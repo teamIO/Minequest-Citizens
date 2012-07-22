@@ -21,12 +21,13 @@ package net.teamio.minequest.citizens.listener;
 import net.teamio.minequest.citizens.frontend.text.CommandGuide;
 
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 
 public class CommandListener implements Listener {
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerChat(PlayerChatEvent e){
 		if (CommandGuide.getPlayersInGuide().contains(e.getPlayer().getName())){
 			e.setCancelled(true);
@@ -49,6 +50,9 @@ public class CommandListener implements Listener {
 					return;
 				case 0:
 					guide.onExitChoice();
+					return;
+				default:
+					guide.showInvalidChoice();
 					return;
 				}
 			} catch (NumberFormatException ex) {

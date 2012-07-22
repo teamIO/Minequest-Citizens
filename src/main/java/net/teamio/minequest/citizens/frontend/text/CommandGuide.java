@@ -62,9 +62,9 @@ public class CommandGuide {
 		this.content = content;
 		displayTitle();
 		displayMain();
-		if (content.getFirstText()==null && content.getSecondText()==null && content.getThirdText()==null)
+		if (content.getFirstText()==null && content.getSecondText()==null && content.getThirdText()==null) {
 			onExitChoice();
-		else {
+		} else {
 			displayChoices();
 			showAskingChoice();
 		}

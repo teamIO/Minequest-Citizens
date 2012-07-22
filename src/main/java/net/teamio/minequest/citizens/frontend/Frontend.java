@@ -48,7 +48,8 @@ public class Frontend {
 			}
 		} catch (ClassNotFoundException e) {}
 		
-		CommandGuide.startPlayerGuide(new NPCContent(player,content),player);
+		if (!CommandGuide.getPlayersInGuide().contains(player.getName()))
+			CommandGuide.startPlayerGuide(new NPCContent(player,content),player);
 	}
 
 }

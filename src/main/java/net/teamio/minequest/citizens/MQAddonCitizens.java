@@ -20,6 +20,8 @@ package net.teamio.minequest.citizens;
 
 import net.teamio.minequest.citizens.command.NPCCommandFrontend;
 import net.teamio.minequest.citizens.listener.CitizensListener;
+import net.teamio.minequest.citizens.listener.CommandListener;
+import net.teamio.minequest.citizens.listener.ExitListener;
 import net.teamio.minequest.citizens.statistic.NPCStatistic;
 import net.teamio.minequest.citizens.tracker.DescriptionManager;
 
@@ -69,6 +71,8 @@ public class MQAddonCitizens extends JavaPlugin {
 		getCommand("mqnpc").setExecutor(new NPCCommandFrontend());
 		Managers.getStatisticManager().registerStatistic(NPCStatistic.class);
 		getServer().getPluginManager().registerEvents(new CitizensListener(), this);
+		getServer().getPluginManager().registerEvents(new CommandListener(), this);
+		getServer().getPluginManager().registerEvents(new ExitListener(), this);
 	}
 	
 	@Override
