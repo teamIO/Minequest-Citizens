@@ -1,0 +1,33 @@
+name: MineQuest-Citizens
+main: net.teamio.minequest.citizens.MQAddonCitizens
+version: ${build.number}
+
+author: Xu_R
+
+description: Adds Citizens2 support for MineQuest
+website: www.theminequest.com
+
+load: POSTWORLD
+softdepend: [Spout,Citizens,MineQuest]
+
+commands:
+  mqnpc:
+    description: View MineQuest Citizens NPC commands.
+
+permissions:
+  minequest.command.mqnpc.*:
+    description: Allows use of NPC management commands for MineQuest.
+    default: op
+    children:
+      minequest.command.mqnpc.toggle: true
+      minequest.command.mqnpc.check: true
+      minequest.command.mqnpc.help: true
+  minequest.command.mqnpc.toggle:
+    description: Allows toggling the use of NPCs and giving quests.
+    default: op
+  minequest.command.mqnpc.check:
+    description: Allows checking to see if NPCs are giving quests.
+    default: op
+  minequest.command.mqnpc.help:
+    description: See the help menu.
+    default: op
