@@ -32,79 +32,15 @@ public class NPCStatistic extends Statistic {
 	@Field
 	private int npcid;
 	
-	@Field
-	private int status;
-	
-	@Field
-	private String assignment;
-
 	public int getNpcid() {
 		return npcid;
 	}
-
+	
 	public void setNpcid(int npcid) {
 		this.npcid = npcid;
 	}
-
-	public NPCStatus getStatus() {
-		if (status==1)
-			return NPCStatus.ACTIVE;
-		else if (status==2)
-			return NPCStatus.ASSIGNED;
-		else if (status==3)
-			return NPCStatus.COMPLETED;
-		else
-			return NPCStatus.NEW;
-	}
-
-	public void setStatus(NPCStatus status) {
-		switch(status){
-		case ACTIVE:
-			this.status = 1;
-			return;
-		case ASSIGNED:
-			this.status = 2;
-			return;
-		case COMPLETED:
-			this.status = 3;
-			return;
-		default:
-			this.status = 0;
-			return;
-		}
-	}
-
-	public String getAssignment() {
-		return assignment;
-	}
-
-	public void setAssignment(String assignment) {
-		this.assignment = assignment;
-	}
-
+	
 	@Override
 	public void setup() {}
 	
-	public static enum NPCStatus {
-		
-		/**
-		 * Indicates that the player was just assigned to the NPC
-		 * and therefore first-time greetings should be said.
-		 */
-		NEW,
-		/**
-		 * Indicates that the player currently gets quests from this NPC
-		 */
-		ACTIVE,
-		/**
-		 * Indicates that the player is currently on a quest from the NPC
-		 */
-		ASSIGNED,
-		/**
-		 * Indicates that the player may no longer get quests from this
-		 * NPC (due the quest exhaustion or level outgrowth)
-		 */
-		COMPLETED;
-	}
-
 }

@@ -23,7 +23,9 @@ import java.util.List;
 
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
+import net.teamio.minequest.citizens.statistic.NPCStatisticUtils;
 import net.teamio.minequest.citizens.tracker.NPCDescription;
+import net.teamio.minequest.citizens.tracker.NPCUtils;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -55,32 +57,40 @@ public class NPCContent extends Content {
 		// setup properties
 		NPC n = CitizensAPI.getNPCRegistry().getById(npc.getId());
 		title = n.getName();
-		// get list of quests available
-		List<String> quests = npc.getQuests();
-		List<String> availablequests = new ArrayList<String>();
-		for (String q : quests){
-			LogStatus l = QuestStatisticUtils.hasQuest(getPlayer().getName(), q);
-			if (l==LogStatus.GIVEN || l==LogStatus.ACTIVE) {
-				availablequests = null;
-				break;
-			} else if (l==LogStatus.UNKNOWN) {
-				availablequests.add(q);
-			} else {
-				QuestDetails details = Managers.getQuestManager().getDetails(q);
-				if (details!=null){
-					if (QuestDetailsUtils.requirementsMet(details, getPlayer()))
-						availablequests.add(q);
-				}
-			}
+		
+		// if this player doesn't have this NPC assigned, screw them.
+		if (!NPCStatisticUtils.hasNPC(player.getName(), npc.getId())){
+			maintext = npc.getWhoareyoumessage();
+			firsttext = null;
+			secondtext = null;
+			thirdtext = null;
+			return;
 		}
+		
+		// get list of quests available
+		List<String> availablequests = NPCUtils.getAvailableQuests(getPlayer(), npc);
 		if (availablequests == null) {
-			maintext = "You already have an active quest that this contact gives. Finish that first.";
+			maintext = npc.getActivemessage();
 			firsttext = null;
 			secondtext = null;
 			thirdtext = null;
 			return;
 		} else if (availablequests.size()==0) {
-			maintext = npc.getNoquestmessage();
+			StringBuilder b = new StringBuilder();
+			b.append(npc.getNoquestmessage()).append("\n");
+			if (npc.getRecommend().size()!=0){
+				b.append("Maybe you could ask for quests from other contacts...");
+				for (Integer i : npc.getRecommend()){
+					NPC nc = CitizensAPI.getNPCRegistry().getById(i);
+					if (nc==null)
+						continue;
+					b.append("\n      - ").append(nc.getFullName());
+					// by default, this assigns these players access to these NPCS
+					// FIXME make configurable
+					NPCStatisticUtils.assignNPCToPlayer(getPlayer().getName(), i);
+				}
+			}
+			maintext = b.toString();
 			firsttext = null;
 			secondtext = null;
 			thirdtext = null;

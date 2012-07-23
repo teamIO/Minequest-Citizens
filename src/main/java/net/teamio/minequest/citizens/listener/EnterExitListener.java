@@ -20,15 +20,26 @@ package net.teamio.minequest.citizens.listener;
 
 import net.teamio.minequest.citizens.MQAddonCitizens;
 import net.teamio.minequest.citizens.frontend.text.CommandGuide;
+import net.teamio.minequest.citizens.statistic.NPCStatisticUtils;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-public class ExitListener implements Listener {
+public class EnterExitListener implements Listener {
+	
+	@EventHandler
+	public void onPlayerJoin(PlayerJoinEvent e){
+		if (MQAddonCitizens.firstNPC==-1)
+			return;
+		if (!NPCStatisticUtils.hasNPC(e.getPlayer().getName(),MQAddonCitizens.firstNPC)){
+			NPCStatisticUtils.assignNPCToPlayer(e.getPlayer().getName(), MQAddonCitizens.firstNPC);
+		}
+	}
 	
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent e){

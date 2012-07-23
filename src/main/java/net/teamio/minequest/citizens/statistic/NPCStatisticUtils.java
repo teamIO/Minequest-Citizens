@@ -18,6 +18,37 @@
  */
 package net.teamio.minequest.citizens.statistic;
 
+import java.util.List;
+
+import com.theminequest.MineQuest.API.Managers;
+
 public class NPCStatisticUtils {
+	
+	public static void assignNPCToPlayer(String playerName, int id) {
+		if (!hasNPC(playerName,id)) {
+			NPCStatistic n = Managers.getStatisticManager().createStatistic(playerName, NPCStatistic.class);
+			n.setNpcid(id);
+			Managers.getStatisticManager().saveStatistic(n, NPCStatistic.class);
+		}
+	}
+	
+	public static void deassignNPCFromPlayer(String playerName, int id) {
+		List<NPCStatistic> statistics = Managers.getStatisticManager().getAllStatistics(playerName, NPCStatistic.class);
+		for (NPCStatistic n : statistics) {
+			if (n.getNpcid()==id){
+				Managers.getStatisticManager().removeStatistic(n, NPCStatistic.class);
+				return;
+			}
+		}
+	}
+	
+	public static boolean hasNPC(String playerName, int id) {
+		List<NPCStatistic> statistics = Managers.getStatisticManager().getAllStatistics(playerName, NPCStatistic.class);
+		for (NPCStatistic n : statistics) {
+			if (n.getNpcid()==id)
+				return true;
+		}
+		return false;
+	}
 
 }

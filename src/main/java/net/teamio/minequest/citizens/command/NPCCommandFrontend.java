@@ -19,6 +19,7 @@
 package net.teamio.minequest.citizens.command;
 
 import net.teamio.minequest.citizens.MQAddonCitizens;
+import net.teamio.minequest.citizens.statistic.NPCStatisticUtils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -33,16 +34,15 @@ public class NPCCommandFrontend extends CommandFrontend {
 
 	public NPCCommandFrontend() {
 		super("mqnpc");
-		MineQuest.commandListener.helpmenu.put("mqnpc", "(NPC) Manage NPC Commands.");
 	}
 	
-	public Boolean check(Player p, String[] args) {
+	public Boolean assign(Player p, String[] args) {
 		CommandSender sender = p;
 		if (sender == null)
 			sender = Bukkit.getConsoleSender();
 		
-		if (args.length!=1){
-			sender.sendMessage(I18NMessage.Cmd_INVALIDARGS.getDescription());
+		if (args.length!=2){
+			sender.sendMessage(I18NMessage.Cmd_INVALIDARGS.getValue());
 			return false;
 		}
 		
@@ -51,7 +51,69 @@ public class NPCCommandFrontend extends CommandFrontend {
 		try {
 			citizensid = Integer.parseInt(args[0]);
 		} catch (Exception e) {
-			sender.sendMessage(I18NMessage.Cmd_INVALIDARGS.getDescription());
+			sender.sendMessage(I18NMessage.Cmd_INVALIDARGS.getValue());
+			return false;
+		}
+
+		Player target = Bukkit.getPlayer(args[1]);
+		
+		if (target==null) {
+			sender.sendMessage(I18NMessage.Cmd_INVALIDARGS.getValue());
+			return false;
+		}
+		
+		NPCStatisticUtils.assignNPCToPlayer(target.getName(), citizensid);
+		sender.sendMessage("Assigned NPC to target.");
+		return true;
+	}
+	
+	public Boolean deassign(Player p, String[] args) {
+		CommandSender sender = p;
+		if (sender == null)
+			sender = Bukkit.getConsoleSender();
+		
+		if (args.length!=2){
+			sender.sendMessage(I18NMessage.Cmd_INVALIDARGS.getValue());
+			return false;
+		}
+		
+		Integer citizensid;
+		
+		try {
+			citizensid = Integer.parseInt(args[0]);
+		} catch (Exception e) {
+			sender.sendMessage(I18NMessage.Cmd_INVALIDARGS.getValue());
+			return false;
+		}
+
+		Player target = Bukkit.getPlayer(args[1]);
+		
+		if (target==null) {
+			sender.sendMessage(I18NMessage.Cmd_INVALIDARGS.getValue());
+			return false;
+		}
+		
+		NPCStatisticUtils.deassignNPCFromPlayer(target.getName(), citizensid);
+		sender.sendMessage("Deassigned NPC to target.");
+		return true;
+	}
+	
+	public Boolean check(Player p, String[] args) {
+		CommandSender sender = p;
+		if (sender == null)
+			sender = Bukkit.getConsoleSender();
+		
+		if (args.length!=1){
+			sender.sendMessage(I18NMessage.Cmd_INVALIDARGS.getValue());
+			return false;
+		}
+		
+		Integer citizensid;
+		
+		try {
+			citizensid = Integer.parseInt(args[0]);
+		} catch (Exception e) {
+			sender.sendMessage(I18NMessage.Cmd_INVALIDARGS.getValue());
 			return false;
 		}
 		
@@ -70,7 +132,7 @@ public class NPCCommandFrontend extends CommandFrontend {
 			sender = Bukkit.getConsoleSender();
 		
 		if (args.length!=1){
-			sender.sendMessage(I18NMessage.Cmd_INVALIDARGS.getDescription());
+			sender.sendMessage(I18NMessage.Cmd_INVALIDARGS.getValue());
 			return false;
 		}
 		
@@ -79,7 +141,7 @@ public class NPCCommandFrontend extends CommandFrontend {
 		try {
 			citizensid = Integer.parseInt(args[0]);
 		} catch (Exception e) {
-			sender.sendMessage(I18NMessage.Cmd_INVALIDARGS.getDescription());
+			sender.sendMessage(I18NMessage.Cmd_INVALIDARGS.getValue());
 			return false;
 		}
 		
@@ -103,6 +165,8 @@ public class NPCCommandFrontend extends CommandFrontend {
 		
 		String[] send = {
 				ChatUtils.formatHeader("NPC Management"),
+				ChatUtils.formatHelp("mqnpc assign [npcid] [target]", "Assign a contact to a player."),
+				ChatUtils.formatHelp("mqnpc deassign [npcid] [target]", "Deassign a contact from a player."),
 				ChatUtils.formatHelp("mqnpc toggle [npcid]", "Toggle an NPC to give quests."),
 				ChatUtils.formatHelp("mqnpc check [npcid]", "Check if an NPC gives quests.")
 		};

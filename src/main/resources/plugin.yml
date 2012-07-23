@@ -13,6 +13,8 @@ softdepend: [Spout,Citizens,MineQuest]
 commands:
   mqnpc:
     description: View MineQuest Citizens NPC commands.
+  contacts:
+    description: Show all active contacts giving you quests.
 
 permissions:
   minequest.command.mqnpc.*:
@@ -31,3 +33,11 @@ permissions:
   minequest.command.mqnpc.help:
     description: See the help menu.
     default: op
+  minequest.command.contacts:
+    description: Show all active contacts giving you quests.
+    default: true
+    children:
+      minequest.command.contacts.help: true
+  minequest.command.contacts.help:
+    description: Show all active contacts giving you quests.
+    default: true

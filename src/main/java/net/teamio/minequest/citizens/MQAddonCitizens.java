@@ -18,21 +18,26 @@
  */
 package net.teamio.minequest.citizens;
 
+import java.io.File;
+
+import net.teamio.minequest.citizens.command.ContactsCommandFrontend;
 import net.teamio.minequest.citizens.command.NPCCommandFrontend;
 import net.teamio.minequest.citizens.listener.CitizensListener;
 import net.teamio.minequest.citizens.listener.CommandListener;
-import net.teamio.minequest.citizens.listener.ExitListener;
+import net.teamio.minequest.citizens.listener.EnterExitListener;
 import net.teamio.minequest.citizens.statistic.NPCStatistic;
 import net.teamio.minequest.citizens.tracker.DescriptionManager;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.theminequest.MineQuest.API.Managers;
+import com.theminequest.MineQuest.API.Utils.PropertiesFile;
 
 public class MQAddonCitizens extends JavaPlugin {
 	
 	public static MQAddonCitizens activePlugin = null;
 	public static DescriptionManager descriptionManager = null;
+	public static int firstNPC = -1;
 	
 	@Override
 	public void onEnable(){
@@ -69,10 +74,13 @@ public class MQAddonCitizens extends JavaPlugin {
 		activePlugin = this;
 		descriptionManager = new DescriptionManager();
 		getCommand("mqnpc").setExecutor(new NPCCommandFrontend());
+		getCommand("contacts").setExecutor(new ContactsCommandFrontend());
 		Managers.getStatisticManager().registerStatistic(NPCStatistic.class);
 		getServer().getPluginManager().registerEvents(new CitizensListener(), this);
 		getServer().getPluginManager().registerEvents(new CommandListener(), this);
-		getServer().getPluginManager().registerEvents(new ExitListener(), this);
+		getServer().getPluginManager().registerEvents(new EnterExitListener(), this);
+		PropertiesFile f = new PropertiesFile(Managers.getActivePlugin().getDataFolder().getAbsolutePath() + File.separator + "npc.properties");
+		firstNPC = f.getInt("defaultnpc", -1);
 	}
 	
 	@Override

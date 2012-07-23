@@ -32,13 +32,17 @@ public class NPCDescription {
 	private int id;
 	private String noquestmessage;
 	private String havequestmessage;
+	private String whoareyoumessage;
+	private String activemessage;
 	private List<String> quests;
 	private List<Integer> recommend;
 	
 	public NPCDescription(int id) throws IOException{
 		this.id = id;
-		noquestmessage = "I don't seem to have anything for you to do.";
+		noquestmessage = "I no longer have anything else for you to do.";
 		havequestmessage = "Let's get started.";
+		whoareyoumessage = "I don't know you.";
+		activemessage = "You've got stuff to do right now. Finish that before coming to me.";
 		quests = new ArrayList<String>();
 		recommend = new ArrayList<Integer>();
 		file = new File(DescriptionManager.DESCRIPTION_LOCATION + File.separator + id + ".yaml");
@@ -63,6 +67,8 @@ public class NPCDescription {
 		id = config.getInt("id");
 		noquestmessage = config.getString("noquest");
 		havequestmessage = config.getString("havequest");
+		whoareyoumessage = config.getString("dontknow");
+		activemessage = config.getString("activemsg");
 		
 		/*
 		 * Quests - What quests does this NPC make available?
@@ -87,6 +93,8 @@ public class NPCDescription {
 		config.set("id", id);
 		config.set("noquest",noquestmessage);
 		config.set("havequest",havequestmessage);
+		config.set("dontknow",whoareyoumessage);
+		config.set("activemsg",activemessage);
 		config.set("quests", quests);
 		config.set("recommend",recommend);
 		config.save(file);
@@ -128,6 +136,22 @@ public class NPCDescription {
 
 	public void setRecommend(List<Integer> recommend) {
 		this.recommend = recommend;
+	}
+
+	public String getWhoareyoumessage() {
+		return whoareyoumessage;
+	}
+
+	public void setWhoareyoumessage(String whoareyoumessage) {
+		this.whoareyoumessage = whoareyoumessage;
+	}
+
+	public String getActivemessage() {
+		return activemessage;
+	}
+
+	public void setActivemessage(String activemessage) {
+		this.activemessage = activemessage;
 	}
 	
 }
