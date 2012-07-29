@@ -18,6 +18,8 @@
  */
 package net.teamio.minequest.citizens.command;
 
+import java.io.IOException;
+
 import net.teamio.minequest.citizens.MQAddonCitizens;
 import net.teamio.minequest.citizens.statistic.NPCStatisticUtils;
 
@@ -150,6 +152,11 @@ public class NPCCommandFrontend extends CommandFrontend {
 			sender.sendMessage("This NPC will no longer give quests.");
 		} else {
 			MQAddonCitizens.descriptionManager.activeNPCs.add(citizensid);
+			try {
+				MQAddonCitizens.descriptionManager.getNPCDescription(citizensid);
+			} catch (IOException e) {
+				sender.sendMessage("Hmm... Is plugins/MineQuest/npc readable?");
+			}
 			sender.sendMessage("This NPC will now give quests.");
 			sender.sendMessage("You should configure what quests it gives and says in its .yaml file.");
 		}

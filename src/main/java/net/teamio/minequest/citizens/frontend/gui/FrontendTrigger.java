@@ -16,35 +16,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.teamio.minequest.citizens.frontend;
-
-import java.io.IOException;
+package net.teamio.minequest.citizens.frontend.gui;
 
 import net.citizensnpcs.api.npc.NPC;
-import net.teamio.minequest.citizens.MQAddonCitizens;
 import net.teamio.minequest.citizens.frontend.content.NPCContent;
-import net.teamio.minequest.citizens.frontend.gui.FrontendTrigger;
 import net.teamio.minequest.citizens.frontend.text.CommandGuide;
 import net.teamio.minequest.citizens.tracker.NPCDescription;
 
 import org.bukkit.entity.Player;
+import org.getspout.spoutapi.player.SpoutPlayer;
 
-public class Frontend {
+public class FrontendTrigger {
 
-	public static void openFrontend(Player player, NPC npc){
-		NPCDescription content;
-		try {
-			content = MQAddonCitizens.descriptionManager.getNPCDescription(npc.getId());
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-		if (MQAddonCitizens.activePlugin.getServer().getPluginManager().getPlugin("Spout") != null) {
-			FrontendTrigger.startSpoutEnd(player,npc,content);
+	public static void startSpoutEnd(Player player, NPC npc, NPCDescription content){
+		SpoutPlayer p = (SpoutPlayer)player;
+		if (p.isSpoutCraftEnabled()){
+			p.getMainScreen().attachPopupScreen(new GUIGuide(new NPCContent(player,content),p));
 			return;
 		}
 		if (!CommandGuide.getPlayersInGuide().contains(player.getName()))
 			CommandGuide.startPlayerGuide(new NPCContent(player,content),player);
 	}
-	
 
 }

@@ -38,7 +38,8 @@ public class CommandGuide {
 	
 	public static CommandGuide startPlayerGuide(Content content, Player player){
 		CommandGuide c = new CommandGuide(content,player);
-		playersInGuide.put(player.getName(),c);
+		if (!c.exited)
+			playersInGuide.put(player.getName(),c);
 		return c;
 	}
 	
@@ -52,13 +53,17 @@ public class CommandGuide {
 
 	private Player player;
 	private Content content;
+	private boolean exited;
 
 	private CommandGuide(Content content, Player player){
 		this.player = player;
+		this.exited = false;
 		setContent(content);
 	}
 
 	public void setContent(Content content){
+		if (content==null)
+			return;
 		this.content = content;
 		displayTitle();
 		displayMain();
@@ -148,6 +153,7 @@ public class CommandGuide {
 		player.sendMessage(ChatColor.GRAY + "-----------------------------------------");
 		player.sendMessage(ChatColor.GRAY + "Exited menu.");
 		removePlayerInGuide(player.getName());
+		this.exited = true;
 	}
 
 }
