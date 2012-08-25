@@ -34,6 +34,8 @@ import org.getspout.spoutapi.gui.Screen;
 import org.getspout.spoutapi.gui.WidgetAnchor;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
+import com.theminequest.MineQuest.API.Quest.QuestDetailsUtils;
+
 public class GUIGuide extends GenericPopup {
 
 	final GenericTextField guideField, guideInvisible;
@@ -128,7 +130,7 @@ public class GUIGuide extends GenericPopup {
 		this.content = content;
 
 		guideName.setText(content.getTitle()).setWidth(-1);
-		guideField.setText(content.getMainText());
+		guideField.setText(content.getMainText().replaceAll(QuestDetailsUtils.CODE_NEWLINE_SEQ,"\n"));
 		if (content.getFirstText()!=null){
 			firstbutton.setText(content.getFirstText());
 			firstbutton.setVisible(true);

@@ -28,6 +28,8 @@ import net.teamio.minequest.citizens.frontend.content.Content;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import com.theminequest.MineQuest.API.Quest.QuestDetailsUtils;
+
 public class CommandGuide {
 
 	private static Map<String,CommandGuide> playersInGuide = new LinkedHashMap<String,CommandGuide>();
@@ -82,7 +84,7 @@ public class CommandGuide {
 	}
 
 	public void displayMain(){
-		player.sendMessage(content.getMainText().split("\n"));
+		player.sendMessage(content.getMainText().split(QuestDetailsUtils.CODE_NEWLINE_SEQ));
 	}
 
 	public void displayChoices(){

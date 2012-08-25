@@ -23,42 +23,49 @@ import net.teamio.minequest.citizens.frontend.text.CommandGuide;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class CommandListener implements Listener {
 	
+	private Object lock;
+	
+	public CommandListener() {
+		lock = new Object();
+	}
+	
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onPlayerChat(PlayerChatEvent e){
-		if (CommandGuide.getPlayersInGuide().contains(e.getPlayer().getName())){
-			e.setCancelled(true);
-			CommandGuide guide = CommandGuide.getPlayerGuide(e.getPlayer().getName());
-			String msg = e.getMessage();
-			try {
-				int choice = Integer.parseInt(msg);
-				switch (choice) {
-				case 1:
-					guide.onFirstChoice();
-					return;
-				case 2:
-					guide.onSecondChoice();
-					return;
-				case 3:
-					guide.onThirdChoice();
-					return;
-				case 9:
-					guide.onDisplayChoice();
-					return;
-				case 0:
-					guide.onExitChoice();
-					return;
-				default:
+	public void onPlayerChat(AsyncPlayerChatEvent e){
+		synchronized(lock) {
+			if (CommandGuide.getPlayersInGuide().contains(e.getPlayer().getName())){
+				e.setCancelled(true);
+				CommandGuide guide = CommandGuide.getPlayerGuide(e.getPlayer().getName());
+				String msg = e.getMessage();
+				try {
+					int choice = Integer.parseInt(msg);
+					switch (choice) {
+					case 1:
+						guide.onFirstChoice();
+						return;
+					case 2:
+						guide.onSecondChoice();
+						return;
+					case 3:
+						guide.onThirdChoice();
+						return;
+					case 9:
+						guide.onDisplayChoice();
+						return;
+					case 0:
+						guide.onExitChoice();
+						return;
+					default:
+						guide.showInvalidChoice();
+						return;
+					}
+				} catch (NumberFormatException ex) {
 					guide.showInvalidChoice();
-					return;
 				}
-			} catch (NumberFormatException ex) {
-				guide.showInvalidChoice();
 			}
 		}
 	}
-
 }
