@@ -29,7 +29,7 @@
 		</repository>
 		<repository>
 			<id>citizensnpcs-jenkins</id>
-			<url>http://ci.citizensnpcs.net/plugin/repository/everything/</url>
+			<url>http://ci.citizensnpcs.com/plugin/repository/everything/</url>
 		</repository>
 		<repository>
 			<id>milkbowl-repo</id>
