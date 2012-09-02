@@ -77,14 +77,14 @@ public class NPCContent extends Content {
 			return;
 		} else if (availablequests.size()==0) {
 			StringBuilder b = new StringBuilder();
-			b.append(npc.getNoquestmessage()).append("\n");
+			b.append(npc.getNoquestmessage()).append(QuestDetailsUtils.CODE_NEWLINE_SEQ);
 			if (npc.getRecommend().size()!=0){
 				b.append("Maybe you could ask for quests from other contacts...");
 				for (Integer i : npc.getRecommend()){
 					NPC nc = CitizensAPI.getNPCRegistry().getById(i);
 					if (nc==null)
 						continue;
-					b.append("\n      - ").append(nc.getFullName());
+					b.append(QuestDetailsUtils.CODE_NEWLINE_SEQ + "      - ").append(nc.getFullName());
 					// by default, this assigns these players access to these NPCS
 					// FIXME make configurable
 					NPCStatisticUtils.assignNPCToPlayer(getPlayer().getName(), i);
@@ -96,17 +96,15 @@ public class NPCContent extends Content {
 			thirdtext = null;
 		} else {
 			StringBuilder builder = new StringBuilder();
-			builder.append(npc.getHavequestmessage() + "\n\n");
+			builder.append(npc.getHavequestmessage() + QuestDetailsUtils.CODE_NEWLINE_SEQ + QuestDetailsUtils.CODE_NEWLINE_SEQ);
 			first = Managers.getQuestManager().getDetails(availablequests.get(0));
-			builder.append("Quest A: ").append("\n");
 			builder.append(QuestDetailsUtils.getOverviewString(first));
-			firsttext = "Accept A";
+			firsttext = "Accept " + first.getProperty(QuestDetails.QUEST_DISPLAYNAME);
 			if (availablequests.size()>1){
-				builder.append("\n" + ChatColor.YELLOW + "========== | OR | ==========\n");
+				builder.append(QuestDetailsUtils.CODE_NEWLINE_SEQ + ChatColor.YELLOW + "========== | OR | ==========" + QuestDetailsUtils.CODE_NEWLINE_SEQ);
 				second = Managers.getQuestManager().getDetails(availablequests.get(1));
-				builder.append("Quest B: ").append("\n");
 				builder.append(QuestDetailsUtils.getOverviewString(second));
-				secondtext = "Accept B";
+				secondtext = "Accept " + second.getProperty(QuestDetails.QUEST_DISPLAYNAME);
 			} else {
 				second = null;
 			}

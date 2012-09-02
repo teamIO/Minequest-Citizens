@@ -38,10 +38,10 @@ public class Frontend {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		if (MQAddonCitizens.activePlugin.getServer().getPluginManager().getPlugin("Spout") != null) {
-			FrontendTrigger.startSpoutEnd(player,npc,content);
-			return;
-		}
+//		if (MQAddonCitizens.activePlugin.getServer().getPluginManager().getPlugin("Spout") != null) {
+//			FrontendTrigger.startSpoutEnd(player,npc,content);
+//			return;
+//		}
 		if (!CommandGuide.getPlayersInGuide().contains(player.getName()))
 			CommandGuide.startPlayerGuide(new NPCContent(player,content),player);
 	}

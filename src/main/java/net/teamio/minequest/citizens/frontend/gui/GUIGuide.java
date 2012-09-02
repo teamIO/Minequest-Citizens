@@ -130,7 +130,11 @@ public class GUIGuide extends GenericPopup {
 		this.content = content;
 
 		guideName.setText(content.getTitle()).setWidth(-1);
-		guideField.setText(content.getMainText().replaceAll(QuestDetailsUtils.CODE_NEWLINE_SEQ,"\n"));
+		String[] split = content.getMainText().split(QuestDetailsUtils.CODE_NEWLINE_SEQ);
+		String actual = "";
+		for (String s : split)
+			actual += s + "\n";
+		guideField.setText(actual);
 		if (content.getFirstText()!=null){
 			firstbutton.setText(content.getFirstText());
 			firstbutton.setVisible(true);
