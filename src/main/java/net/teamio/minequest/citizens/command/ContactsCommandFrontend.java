@@ -45,23 +45,12 @@ public class ContactsCommandFrontend extends CommandFrontend {
 	}
 
 	@Override
-	public Boolean help(Player p, String[] args) {
+	public void help(CommandSender p, String[] args) {
+		noOptionSpecified(p,args);
+	}
+	
+	public void call(CommandSender sender, String[] args) {
 		
-		List<String> tosend = new ArrayList<String>();
-		tosend.add(ChatUtils.formatHeader("Active Contacts"));
-		List<NPCStatistic> npcs = Managers.getStatisticManager().getAllStatistics(p.getName(), NPCStatistic.class);
-		for (NPCStatistic n : npcs) {
-			NPC npc = CitizensAPI.getNPCRegistry().getById(n.getNpcid());
-			if (npc==null)
-				continue;
-			tosend.add(formatNPC(npc.getName(),npc.getBukkitEntity().getLocation().getWorld().getName()));
-		}
-		
-		for (String s : tosend) {
-			p.sendMessage(s);
-		}
-		
-		return true;
 	}
 
 	@Override
@@ -71,7 +60,7 @@ public class ContactsCommandFrontend extends CommandFrontend {
 	
 	private String formatNPC(String name, String location) {
 		String toreturn = "";
-		toreturn += ChatColor.GREEN + "/" + name;
+		toreturn += ChatColor.GREEN + name;
 		for (int i=0; i<20-name.length(); i++)
 			toreturn+=" ";
 		for (int i=0; i<10; i++)
@@ -80,6 +69,23 @@ public class ContactsCommandFrontend extends CommandFrontend {
 			toreturn+=" ";
 		toreturn += ChatColor.YELLOW + location;
 		return toreturn;
+	}
+
+	@Override
+	public void noOptionSpecified(CommandSender p, String[] args) {
+		List<String> tosend = new ArrayList<String>();
+		tosend.add(ChatUtils.formatHeader("Active Contacts"));
+		List<NPCStatistic> npcs = Managers.getStatisticManager().getAllStatistics(p.getName(), NPCStatistic.class);
+		for (NPCStatistic n : npcs) {
+			NPC npc = CitizensAPI.getNPCRegistry().getById(n.getNpcid());
+			if (npc==null)
+				continue;
+			tosend.add(formatNPC(npc.getName(),npc.getBukkitEntity().getLocation().getWorld().getName()));
+		}
+		tosend.add(ChatUtils.formatHeader("To call a contact, use /contacts call"));
+		for (String s : tosend) {
+			p.sendMessage(s);
+		}
 	}
 
 }

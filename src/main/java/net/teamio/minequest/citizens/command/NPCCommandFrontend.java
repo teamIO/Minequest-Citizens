@@ -165,10 +165,7 @@ public class NPCCommandFrontend extends CommandFrontend {
 	}
 
 	@Override
-	public Boolean help(Player p, String[] args) {
-		CommandSender sender = p;
-		if (sender == null)
-			sender = Bukkit.getConsoleSender();
+	public void help(CommandSender sender, String[] args) {
 		
 		String[] send = {
 				ChatUtils.formatHeader("NPC Management"),
@@ -179,13 +176,17 @@ public class NPCCommandFrontend extends CommandFrontend {
 		};
 		
 		sender.sendMessage(send);
-		
-		return true;
+
 	}
 
 	@Override
 	public boolean allowConsole() {
 		return true;
+	}
+
+	@Override
+	public void noOptionSpecified(CommandSender sender, String[] args) {
+		help(sender,args);
 	}
 
 }
