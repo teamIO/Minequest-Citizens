@@ -32,13 +32,30 @@ public abstract class Content {
 		return player;
 	}
 	
-	public abstract String getTitle();
-	public abstract String getMainText();
-	public abstract String getFirstText();
-	public abstract String getSecondText();
-	public abstract String getThirdText();
+	public abstract boolean isTextEntry();
 	
-	public abstract Content onFirstText();
-	public abstract Content onSecondText();
-	public abstract Content onThirdText();
+	public abstract String getTitle();
+	public abstract String getMain();
+	public String getExit() {
+		return "Exit";
+	}
+	
+	public abstract String get1();
+	public abstract String get2();
+	public abstract String get3();
+	public abstract String get4();
+	public abstract String get5();
+	public abstract String get6();
+	public abstract String get7();
+	public abstract String get8();
+	
+	public abstract Content on1();
+	public abstract Content on2();
+	public abstract Content on3();
+	public abstract Content on4();
+	public abstract Content on5();
+	public abstract Content on6();
+	public abstract Content on7();
+	public abstract Content on8();
+	public abstract Content onTextEntry(String text);
 }

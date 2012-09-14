@@ -40,30 +40,49 @@ public class CommandListener implements Listener {
 				e.setCancelled(true);
 				CommandGuide guide = CommandGuide.getPlayerGuide(e.getPlayer().getName());
 				String msg = e.getMessage();
-				try {
-					int choice = Integer.parseInt(msg);
-					switch (choice) {
-					case 1:
-						guide.onFirstChoice();
-						return;
-					case 2:
-						guide.onSecondChoice();
-						return;
-					case 3:
-						guide.onThirdChoice();
-						return;
-					case 9:
-						guide.onDisplayChoice();
-						return;
-					case 0:
-						guide.onExitChoice();
-						return;
-					default:
+				if (!guide.isTextGuide()) {
+					try {
+						int choice = Integer.parseInt(msg);
+						switch (choice) {
+						case 1:
+							guide.onFirstChoice();
+							return;
+						case 2:
+							guide.onSecondChoice();
+							return;
+						case 3:
+							guide.onThirdChoice();
+							return;
+						case 4:
+							guide.onFourthChoice();
+							return;
+						case 5:
+							guide.onFifthChoice();
+							return;
+						case 6:
+							guide.onSixthChoice();
+							return;
+						case 7:
+							guide.onSeventhChoice();
+							return;
+						case 8:
+							guide.onEighthChoice();
+							return;
+						case 9:
+							guide.onDisplayChoice();
+							return;
+						case 0:
+							guide.onExitChoice();
+							return;
+						default:
+							guide.showInvalidChoice();
+							return;
+						}
+					} catch (NumberFormatException ex) {
 						guide.showInvalidChoice();
-						return;
 					}
-				} catch (NumberFormatException ex) {
-					guide.showInvalidChoice();
+				} else {
+					guide.onTextEntry(msg);
 				}
 			}
 		}

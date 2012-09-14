@@ -119,27 +119,27 @@ public class NPCContent extends Content {
 	}
 
 	@Override
-	public String getMainText() {
+	public String getMain() {
 		return maintext;
 	}
 
 	@Override
-	public String getFirstText() {
+	public String get1() {
 		return firsttext;
 	}
 
 	@Override
-	public String getSecondText() {
+	public String get2() {
 		return secondtext;
 	}
 
 	@Override
-	public String getThirdText() {
+	public String get3() {
 		return thirdtext;
 	}
 
 	@Override
-	public Content onFirstText() {
+	public Content on1() {
 		try {
 			QuestStatisticUtils.giveQuest(getPlayer().getName(), (String) first.getProperty(QuestDetails.QUEST_NAME));
 			maintext = first.getProperty(QuestDetails.QUEST_ACCEPT);
@@ -154,7 +154,7 @@ public class NPCContent extends Content {
 	}
 
 	@Override
-	public Content onSecondText() {
+	public Content on2() {
 		if (second == null)
 			return this;
 		try {
@@ -171,8 +171,68 @@ public class NPCContent extends Content {
 	}
 
 	@Override
-	public Content onThirdText() {
+	public Content on3() {
 		return this;
+	}
+
+	@Override
+	public String get4() {
+		return null;
+	}
+
+	@Override
+	public String get5() {
+		return null;
+	}
+
+	@Override
+	public String get6() {
+		return null;
+	}
+
+	@Override
+	public String get7() {
+		return null;
+	}
+
+	@Override
+	public String get8() {
+		return null;
+	}
+
+	@Override
+	public Content on4() {
+		return null;
+	}
+
+	@Override
+	public Content on5() {
+		return null;
+	}
+
+	@Override
+	public Content on6() {
+		return null;
+	}
+
+	@Override
+	public Content on7() {
+		return null;
+	}
+
+	@Override
+	public Content on8() {
+		return null;
+	}
+
+	@Override
+	public boolean isTextEntry() {
+		return false;
+	}
+
+	@Override
+	public Content onTextEntry(String text) {
+		return null;
 	}
 
 }

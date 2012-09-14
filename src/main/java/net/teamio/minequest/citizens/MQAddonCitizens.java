@@ -22,6 +22,8 @@ import java.io.File;
 
 import net.teamio.minequest.citizens.command.ContactsCommandFrontend;
 import net.teamio.minequest.citizens.command.NPCCommandFrontend;
+import net.teamio.minequest.citizens.event.NPCAssignEvent;
+import net.teamio.minequest.citizens.event.NPCDestinationEvent;
 import net.teamio.minequest.citizens.listener.CitizensListener;
 import net.teamio.minequest.citizens.listener.CommandListener;
 import net.teamio.minequest.citizens.listener.EnterExitListener;
@@ -81,6 +83,8 @@ public class MQAddonCitizens extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new EnterExitListener(), this);
 		PropertiesFile f = new PropertiesFile(Managers.getActivePlugin().getDataFolder().getAbsolutePath() + File.separator + "npc.properties");
 		firstNPC = f.getInt("defaultnpc", -1);
+		Managers.getEventManager().addEvent("NPCAssignEvent", NPCAssignEvent.class);
+		Managers.getEventManager().addEvent("NPCDestinationEvent", NPCDestinationEvent.class);
 	}
 	
 	@Override

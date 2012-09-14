@@ -130,46 +130,46 @@ public class GUIGuide extends GenericPopup {
 		this.content = content;
 
 		guideName.setText(content.getTitle()).setWidth(-1);
-		String[] split = content.getMainText().split(QuestDetailsUtils.CODE_NEWLINE_SEQ);
+		String[] split = content.getMain().split(QuestDetailsUtils.CODE_NEWLINE_SEQ);
 		String actual = "";
 		for (String s : split)
 			actual += s + "\n";
 		guideField.setText(actual);
-		if (content.getFirstText()!=null){
-			firstbutton.setText(content.getFirstText());
+		if (content.get1()!=null){
+			firstbutton.setText(content.get1());
 			firstbutton.setVisible(true);
 		} else
 			firstbutton.setVisible(false);
 
-		if (content.getSecondText()!=null){
-			secondbutton.setText(content.getSecondText());
+		if (content.get2()!=null){
+			secondbutton.setText(content.get2());
 			secondbutton.setVisible(true);
 		} else
 			secondbutton.setVisible(false);
 
-		if (content.getSecondText()!=null){
-			secondbutton.setText(content.getSecondText());
+		if (content.get2()!=null){
+			secondbutton.setText(content.get2());
 			secondbutton.setVisible(true);
 		} else
 			secondbutton.setVisible(false);
 
-		if (content.getThirdText()!=null){
-			thirdbutton.setText(content.getThirdText());
+		if (content.get3()!=null){
+			thirdbutton.setText(content.get3());
 			thirdbutton.setVisible(true);
 		} else
 			thirdbutton.setVisible(false);
 	}
 
 	public void onFirstClick() {
-		setContent(content.onFirstText());
+		setContent(content.on1());
 	}
 
 	void onSecondClick() {
-		setContent(content.onSecondText());
+		setContent(content.on2());
 	}
 
 	void onThirdClick() {
-		setContent(content.onThirdText());
+		setContent(content.on3());
 	}
 
 	void onCloseClick() {

@@ -24,6 +24,7 @@ import java.util.List;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.teamio.minequest.citizens.MQAddonCitizens;
+import net.teamio.minequest.citizens.frontend.Frontend;
 import net.teamio.minequest.citizens.statistic.NPCStatistic;
 
 import org.bukkit.Bukkit;
@@ -49,8 +50,18 @@ public class ContactsCommandFrontend extends CommandFrontend {
 		noOptionSpecified(p,args);
 	}
 	
-	public void call(CommandSender sender, String[] args) {
-		
+	public void call(Player p, String[] args) {
+		List<NPCStatistic> npcs = Managers.getStatisticManager().getAllStatistics(p.getName(), NPCStatistic.class);
+		for (NPCStatistic n : npcs) {
+			NPC npc = CitizensAPI.getNPCRegistry().getById(n.getNpcid());
+			if (npc==null)
+				continue;
+			if (MQAddonCitizens.descriptionManager.activeNPCs.contains(npc.getId())){
+				Frontend.openFrontend(p, npc);
+				return;
+			}
+		}
+		p.sendMessage("No such contact!");
 	}
 
 	@Override
@@ -82,7 +93,7 @@ public class ContactsCommandFrontend extends CommandFrontend {
 				continue;
 			tosend.add(formatNPC(npc.getName(),npc.getBukkitEntity().getLocation().getWorld().getName()));
 		}
-		tosend.add(ChatUtils.formatHeader("To call a contact, use /contacts call"));
+		tosend.add(ChatUtils.formatHeader("To call a contact, use /contacts call <name>"));
 		for (String s : tosend) {
 			p.sendMessage(s);
 		}

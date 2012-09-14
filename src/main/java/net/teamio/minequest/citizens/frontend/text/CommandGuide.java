@@ -32,7 +32,7 @@ import com.theminequest.MineQuest.API.Quest.QuestDetailsUtils;
 
 public class CommandGuide {
 
-	private static Map<String,CommandGuide> playersInGuide = new LinkedHashMap<String,CommandGuide>();
+	private static Map<String,CommandGuide> playersInGuide = Collections.synchronizedMap(new LinkedHashMap<String,CommandGuide>());
 
 	public static Set<String> getPlayersInGuide(){
 		return Collections.unmodifiableSet(playersInGuide.keySet());
@@ -69,12 +69,20 @@ public class CommandGuide {
 		this.content = content;
 		displayTitle();
 		displayMain();
-		if (content.getFirstText()==null && content.getSecondText()==null && content.getThirdText()==null) {
+		if (!content.isTextEntry() && content.get1()==null && content.get2()==null && content.get3()==null
+				&& content.get5()==null && content.get6()==null
+				&& content.get7()==null && content.get8()==null) {
 			onExitChoice();
+		} else if (content.isTextEntry()) {
+			showTextChoice();
 		} else {
 			displayChoices();
 			showAskingChoice();
 		}
+	}
+	
+	public boolean isTextGuide(){
+		return content.isTextEntry();
 	}
 
 	public void displayTitle(){
@@ -84,28 +92,53 @@ public class CommandGuide {
 	}
 
 	public void displayMain(){
-		player.sendMessage(content.getMainText().split(QuestDetailsUtils.CODE_NEWLINE_SEQ));
+		player.sendMessage(content.getMain().split(QuestDetailsUtils.CODE_NEWLINE_SEQ));
 	}
 
 	public void displayChoices(){
-		if (content.getFirstText()!=null){
+		if (content.get1()!=null){
 			String send = ChatColor.AQUA + "[1]" + ChatColor.RESET + " ";
-			send+=content.getFirstText();
+			send+=content.get1();
 			player.sendMessage(send);
 		}
-		if (content.getSecondText()!=null){
+		if (content.get2()!=null){
 			String send = ChatColor.AQUA + "[2]" + ChatColor.RESET + " ";
-			send+=content.getSecondText();
+			send+=content.get2();
 			player.sendMessage(send);
 		}
-		if (content.getThirdText()!=null){
+		if (content.get3()!=null){
 			String send = ChatColor.AQUA + "[3]" + ChatColor.RESET + " ";
-			send+=content.getThirdText();
+			send+=content.get3();
+			player.sendMessage(send);
+		}
+		if (content.get4()!=null){
+			String send = ChatColor.AQUA + "[4]" + ChatColor.RESET + " ";
+			send+=content.get4();
+			player.sendMessage(send);
+		}
+		if (content.get5()!=null){
+			String send = ChatColor.AQUA + "[5]" + ChatColor.RESET + " ";
+			send+=content.get5();
+			player.sendMessage(send);
+		}
+		if (content.get6()!=null){
+			String send = ChatColor.AQUA + "[6]" + ChatColor.RESET + " ";
+			send+=content.get6();
+			player.sendMessage(send);
+		}
+		if (content.get7()!=null){
+			String send = ChatColor.AQUA + "[7]" + ChatColor.RESET + " ";
+			send+=content.get7();
+			player.sendMessage(send);
+		}
+		if (content.get8()!=null){
+			String send = ChatColor.AQUA + "[8]" + ChatColor.RESET + " ";
+			send+=content.get8();
 			player.sendMessage(send);
 		}
 		String again = ChatColor.BLUE + "[9]" + ChatColor.RESET + " Display Again";
 		player.sendMessage(again);
-		String exit = ChatColor.BLUE + "[0]" + ChatColor.RESET + " Exit";
+		String exit = ChatColor.BLUE + "[0]" + ChatColor.RESET + " " + content.getExit();
 		player.sendMessage(exit);
 	}
 
@@ -120,28 +153,81 @@ public class CommandGuide {
 		player.sendMessage(ChatColor.GRAY + "Try again or type \"9\" to display again.");
 	}
 
+	private void showTextChoice() {
+		player.sendMessage(ChatColor.GRAY + "-----------------------------------------");
+		player.sendMessage(ChatColor.GRAY + "Enter your response in the chatbox:");
+	}
+
 	public void onFirstChoice(){
-		if (content.getFirstText()==null){
+		if (content.get1()==null){
 			showInvalidChoice();
 			return;
 		}
-		setContent(content.onFirstText());
+		setContent(content.on1());
 	}
 
 	public void onSecondChoice(){
-		if (content.getSecondText()==null){
+		if (content.get2()==null){
 			showInvalidChoice();
 			return;
 		}
-		setContent(content.onSecondText());
+		setContent(content.on2());
 	}
 
 	public void onThirdChoice(){
-		if (content.getThirdText()==null){
+		if (content.get3()==null){
 			showInvalidChoice();
 			return;
 		}
-		setContent(content.onThirdText());
+		setContent(content.on3());
+	}
+	
+	public void onFourthChoice(){
+		if (content.get4()==null){
+			showInvalidChoice();
+			return;
+		}
+		setContent(content.on4());
+	}
+
+	public void onFifthChoice(){
+		if (content.get5()==null){
+			showInvalidChoice();
+			return;
+		}
+		setContent(content.on5());
+	}
+	
+	public void onSixthChoice(){
+		if (content.get6()==null){
+			showInvalidChoice();
+			return;
+		}
+		setContent(content.on6());
+	}
+	
+	public void onSeventhChoice(){
+		if (content.get7()==null){
+			showInvalidChoice();
+			return;
+		}
+		setContent(content.on7());
+	}
+	
+	public void onEighthChoice(){
+		if (content.get8()==null){
+			showInvalidChoice();
+			return;
+		}
+		setContent(content.on8());
+	}
+	
+	public void onTextEntry(String text){
+		if (!content.isTextEntry()){
+			showInvalidChoice();
+			return;
+		}
+		setContent(content.onTextEntry(text));
 	}
 
 	public void onDisplayChoice(){
