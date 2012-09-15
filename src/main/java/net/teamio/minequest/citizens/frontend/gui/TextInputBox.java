@@ -11,6 +11,7 @@ public class TextInputBox extends GenericTextField {
 	public TextInputBox(GUIGuide guide) {
 		this.guide = guide;
 		this.setPlaceholder("Type your response here, then hit ENTER.");
+		this.setMaximumLines(1);
 	}
 
 	@Override
