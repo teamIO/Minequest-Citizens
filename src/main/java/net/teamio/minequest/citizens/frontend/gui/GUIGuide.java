@@ -40,7 +40,9 @@ public class GUIGuide extends GenericPopup {
 
 	final GenericTextField guideField, guideInvisible;
 	final GenericLabel guideName;
-	final GenericButton close, firstbutton, secondbutton, thirdbutton;	
+	final GenericButton close;
+	final SelectionBox selectionbox;
+	final TextInputBox textinputbox;
 	public final SpoutPlayer player;
 	public final Logger log = Logger.getLogger("Minecraft");
 
@@ -102,22 +104,18 @@ public class GUIGuide extends GenericPopup {
 		attachWidget(MQAddonCitizens.activePlugin, guideName);
 		attachWidget(MQAddonCitizens.activePlugin, guideInvisible);
 		
-		firstbutton = new FirstButton(this);
-		firstbutton.setAuto(true);
-		firstbutton.setAnchor(WidgetAnchor.CENTER_CENTER);
-		firstbutton.setAuto(true).setHeight(18).setWidth(80).shiftXPos(-190).shiftYPos(87);
-		attachWidget(MQAddonCitizens.activePlugin, firstbutton);
-
-		secondbutton = new SecondButton(this);
-		secondbutton.setAnchor(WidgetAnchor.CENTER_CENTER);
-		secondbutton.setAuto(true).setHeight(18).setWidth(80).shiftXPos(-100).shiftYPos(87);
-		attachWidget(MQAddonCitizens.activePlugin, secondbutton);
-
-		thirdbutton = new ThirdButton(this);
-		thirdbutton.setAnchor(WidgetAnchor.CENTER_CENTER);
-		thirdbutton.setAuto(true).setHeight(18).setWidth(80).shiftXPos(-10).shiftYPos(87);
-		attachWidget(MQAddonCitizens.activePlugin, thirdbutton);
-
+		selectionbox = new SelectionBox(this);
+		selectionbox.setAuto(true);
+		selectionbox.setAnchor(WidgetAnchor.CENTER_CENTER);
+		selectionbox.setAuto(true).setHeight(18).setWidth(80).shiftXPos(-190).shiftYPos(87);
+		attachWidget(MQAddonCitizens.activePlugin, selectionbox);
+		
+		textinputbox = new TextInputBox(this);
+		selectionbox.setAuto(true);
+		selectionbox.setAnchor(WidgetAnchor.CENTER_CENTER);
+		selectionbox.setAuto(true).setHeight(18).setWidth(80).shiftXPos(-190).shiftYPos(87);
+		attachWidget(MQAddonCitizens.activePlugin, selectionbox);
+		
 		setContent(content);
 	}
 
@@ -130,49 +128,57 @@ public class GUIGuide extends GenericPopup {
 		this.content = content;
 
 		guideName.setText(content.getTitle()).setWidth(-1);
-		String[] split = content.getMain().split(QuestDetailsUtils.CODE_NEWLINE_SEQ);
-		String actual = "";
-		for (String s : split)
-			actual += s + "\n";
-		guideField.setText(actual);
-		if (content.get1()!=null){
-			firstbutton.setText(content.get1());
-			firstbutton.setVisible(true);
-		} else
-			firstbutton.setVisible(false);
+		guideField.setText(content.getMain().replace(QuestDetailsUtils.DESC_NEWLINE_SEQ, "\n"));
+		
+		if (!content.isTextEntry()) {
+			selectionbox.setContent(content);
+			selectionbox.setVisible(true);
+			textinputbox.setVisible(false);
+		} else {
+			selectionbox.setVisible(false);
+			textinputbox.setEnabled(true);
+			textinputbox.setText("");
+			textinputbox.setVisible(true);
+		}
 
-		if (content.get2()!=null){
-			secondbutton.setText(content.get2());
-			secondbutton.setVisible(true);
-		} else
-			secondbutton.setVisible(false);
-
-		if (content.get2()!=null){
-			secondbutton.setText(content.get2());
-			secondbutton.setVisible(true);
-		} else
-			secondbutton.setVisible(false);
-
-		if (content.get3()!=null){
-			thirdbutton.setText(content.get3());
-			thirdbutton.setVisible(true);
-		} else
-			thirdbutton.setVisible(false);
 	}
 
-	public void onFirstClick() {
-		setContent(content.on1());
+	protected void onSelect(int selection) {
+		switch(selection) {
+		case 1:
+			setContent(content.on1());
+			return;
+		case 2:
+			setContent(content.on2());
+			return;
+		case 3:
+			setContent(content.on3());
+			return;
+		case 4:
+			setContent(content.on4());
+			return;
+		case 5:
+			setContent(content.on5());
+			return;
+		case 6:
+			setContent(content.on6());
+			return;
+		case 7:
+			setContent(content.on7());
+			return;
+		case 8:
+			setContent(content.on8());
+			return;
+		default:
+			return;
+		}
+	}
+	
+	protected void onTypingFinish(String text) {
+		setContent(content.onTextEntry(text));
 	}
 
-	void onSecondClick() {
-		setContent(content.on2());
-	}
-
-	void onThirdClick() {
-		setContent(content.on3());
-	}
-
-	void onCloseClick() {
+	protected void onCloseClick() {
 		Screen screen = ((SpoutPlayer) player).getMainScreen();				
 		screen.removeWidget(this);
 		//player.getMainScreen().closePopup();
