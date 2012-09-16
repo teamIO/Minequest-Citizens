@@ -20,6 +20,8 @@ package net.teamio.minequest.citizens.statistic;
 
 import java.util.List;
 
+import net.teamio.minequest.citizens.MQAddonCitizens;
+
 import com.theminequest.MineQuest.API.Managers;
 
 public class NPCStatisticUtils {
@@ -43,6 +45,8 @@ public class NPCStatisticUtils {
 	}
 	
 	public static boolean hasNPC(String playerName, int id) {
+		if (!MQAddonCitizens.enableAssignments)
+			return true;
 		List<NPCStatistic> statistics = Managers.getStatisticManager().getAllStatistics(playerName, NPCStatistic.class);
 		for (NPCStatistic n : statistics) {
 			if (n.getNpcid()==id)

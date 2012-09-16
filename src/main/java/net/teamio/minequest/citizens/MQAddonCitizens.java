@@ -40,6 +40,7 @@ public class MQAddonCitizens extends JavaPlugin {
 	public static MQAddonCitizens activePlugin = null;
 	public static DescriptionManager descriptionManager = null;
 	public static int firstNPC = -1;
+	public static boolean enableAssignments = false;
 	
 	@Override
 	public void onEnable(){
@@ -83,6 +84,7 @@ public class MQAddonCitizens extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new EnterExitListener(), this);
 		PropertiesFile f = new PropertiesFile(Managers.getActivePlugin().getDataFolder().getAbsolutePath() + File.separator + "npc.properties");
 		firstNPC = f.getInt("defaultnpc", -1);
+		enableAssignments = f.getBoolean("enableassign", false);
 		Managers.getEventManager().addEvent("NPCAssignEvent", NPCAssignEvent.class);
 		Managers.getEventManager().addEvent("NPCDestinationEvent", NPCDestinationEvent.class);
 	}
