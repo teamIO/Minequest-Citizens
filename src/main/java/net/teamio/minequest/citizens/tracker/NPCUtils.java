@@ -56,7 +56,7 @@ public class NPCUtils {
 			} else {
 				QuestDetails details = Managers.getQuestManager().getDetails(q);
 				if (details!=null){
-					if (QuestDetailsUtils.requirementsMet(details, player))
+					if (QuestDetailsUtils.getRequirementsMet(details, player))
 						availablequests.add(q);
 				}
 			}
