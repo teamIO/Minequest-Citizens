@@ -79,7 +79,7 @@ public class NPCContent extends Content {
 			StringBuilder b = new StringBuilder();
 			b.append(npc.getNoquestmessage()).append(QuestDetailsUtils.CODE_NEWLINE_SEQ);
 			if (npc.getRecommend().size()!=0){
-				b.append("Maybe you could ask for quests from other contacts...");
+				b.append("I've got some other people you could talk to, though:");
 				for (Integer i : npc.getRecommend()){
 					NPC nc = CitizensAPI.getNPCRegistry().getById(i);
 					if (nc==null)
@@ -88,7 +88,9 @@ public class NPCContent extends Content {
 					// by default, this assigns these players access to these NPCS
 					// FIXME make configurable
 					NPCStatisticUtils.assignNPCToPlayer(getPlayer().getName(), i);
+					b.append(QuestDetailsUtils.CODE_NEWLINE_SEQ);
 				}
+				b.append(ChatColor.GREEN + "You now have new contacts!");
 			}
 			maintext = b.toString();
 			firsttext = null;

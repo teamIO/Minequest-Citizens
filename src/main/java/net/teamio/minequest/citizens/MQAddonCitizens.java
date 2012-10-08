@@ -76,15 +76,17 @@ public class MQAddonCitizens extends JavaPlugin {
 		}
 		activePlugin = this;
 		descriptionManager = new DescriptionManager();
+		PropertiesFile f = new PropertiesFile(Managers.getActivePlugin().getDataFolder().getAbsolutePath() + File.separator + "npc.properties");
+		firstNPC = f.getInt("defaultnpc", -1);
+		enableAssignments = f.getBoolean("enableassign", false);
 		getCommand("mqnpc").setExecutor(new NPCCommandFrontend());
-		getCommand("contacts").setExecutor(new ContactsCommandFrontend());
+		if (enableAssignments) {
+			getCommand("contacts").setExecutor(new ContactsCommandFrontend());
+		}
 		Managers.getStatisticManager().registerStatistic(NPCStatistic.class);
 		getServer().getPluginManager().registerEvents(new CitizensListener(), this);
 		getServer().getPluginManager().registerEvents(new CommandListener(), this);
 		getServer().getPluginManager().registerEvents(new EnterExitListener(), this);
-		PropertiesFile f = new PropertiesFile(Managers.getActivePlugin().getDataFolder().getAbsolutePath() + File.separator + "npc.properties");
-		firstNPC = f.getInt("defaultnpc", -1);
-		enableAssignments = f.getBoolean("enableassign", false);
 		Managers.getEventManager().addEvent("NPCAssignEvent", NPCAssignEvent.class);
 		Managers.getEventManager().addEvent("NPCDestinationEvent", NPCDestinationEvent.class);
 	}
