@@ -44,7 +44,7 @@ public class NPCCommandFrontend extends CommandFrontend {
 			sender = Bukkit.getConsoleSender();
 		
 		if (args.length!=2){
-			sender.sendMessage(I18NMessage.Cmd_INVALIDARGS.getValue());
+			sender.sendMessage(I18NMessage.getLocale().getString(CommandFrontend.IINVALID));
 			return false;
 		}
 		
@@ -53,14 +53,14 @@ public class NPCCommandFrontend extends CommandFrontend {
 		try {
 			citizensid = Integer.parseInt(args[0]);
 		} catch (Exception e) {
-			sender.sendMessage(I18NMessage.Cmd_INVALIDARGS.getValue());
+			sender.sendMessage(I18NMessage.getLocale().getString(CommandFrontend.IINVALID));
 			return false;
 		}
 
 		Player target = Bukkit.getPlayer(args[1]);
 		
 		if (target==null) {
-			sender.sendMessage(I18NMessage.Cmd_INVALIDARGS.getValue());
+			sender.sendMessage(I18NMessage.getLocale().getString(CommandFrontend.IINVALID));
 			return false;
 		}
 		
@@ -75,7 +75,7 @@ public class NPCCommandFrontend extends CommandFrontend {
 			sender = Bukkit.getConsoleSender();
 		
 		if (args.length!=2){
-			sender.sendMessage(I18NMessage.Cmd_INVALIDARGS.getValue());
+			sender.sendMessage(I18NMessage.getLocale().getString(CommandFrontend.IINVALID));
 			return false;
 		}
 		
@@ -84,14 +84,14 @@ public class NPCCommandFrontend extends CommandFrontend {
 		try {
 			citizensid = Integer.parseInt(args[0]);
 		} catch (Exception e) {
-			sender.sendMessage(I18NMessage.Cmd_INVALIDARGS.getValue());
+			sender.sendMessage(I18NMessage.getLocale().getString(CommandFrontend.IINVALID));
 			return false;
 		}
 
 		Player target = Bukkit.getPlayer(args[1]);
 		
 		if (target==null) {
-			sender.sendMessage(I18NMessage.Cmd_INVALIDARGS.getValue());
+			sender.sendMessage(I18NMessage.getLocale().getString(CommandFrontend.IINVALID));
 			return false;
 		}
 		
@@ -106,7 +106,7 @@ public class NPCCommandFrontend extends CommandFrontend {
 			sender = Bukkit.getConsoleSender();
 		
 		if (args.length!=1){
-			sender.sendMessage(I18NMessage.Cmd_INVALIDARGS.getValue());
+			sender.sendMessage(I18NMessage.getLocale().getString(CommandFrontend.IINVALID));
 			return false;
 		}
 		
@@ -115,7 +115,7 @@ public class NPCCommandFrontend extends CommandFrontend {
 		try {
 			citizensid = Integer.parseInt(args[0]);
 		} catch (Exception e) {
-			sender.sendMessage(I18NMessage.Cmd_INVALIDARGS.getValue());
+			sender.sendMessage(I18NMessage.getLocale().getString(CommandFrontend.IINVALID));
 			return false;
 		}
 		
@@ -134,7 +134,7 @@ public class NPCCommandFrontend extends CommandFrontend {
 			sender = Bukkit.getConsoleSender();
 		
 		if (args.length!=1){
-			sender.sendMessage(I18NMessage.Cmd_INVALIDARGS.getValue());
+			sender.sendMessage(I18NMessage.getLocale().getString(CommandFrontend.IINVALID));
 			return false;
 		}
 		
@@ -143,7 +143,7 @@ public class NPCCommandFrontend extends CommandFrontend {
 		try {
 			citizensid = Integer.parseInt(args[0]);
 		} catch (Exception e) {
-			sender.sendMessage(I18NMessage.Cmd_INVALIDARGS.getValue());
+			sender.sendMessage(I18NMessage.getLocale().getString(CommandFrontend.IINVALID));
 			return false;
 		}
 		
