@@ -38,7 +38,7 @@ public class NPCCommandFrontend extends CommandFrontend {
 		super("mqnpc");
 	}
 	
-	public Boolean assign(Player p, String[] args) {
+	public Boolean assign(CommandSender p, String[] args) {
 		CommandSender sender = p;
 		if (sender == null)
 			sender = Bukkit.getConsoleSender();
@@ -69,7 +69,7 @@ public class NPCCommandFrontend extends CommandFrontend {
 		return true;
 	}
 	
-	public Boolean deassign(Player p, String[] args) {
+	public Boolean deassign(CommandSender p, String[] args) {
 		CommandSender sender = p;
 		if (sender == null)
 			sender = Bukkit.getConsoleSender();
@@ -100,7 +100,7 @@ public class NPCCommandFrontend extends CommandFrontend {
 		return true;
 	}
 	
-	public Boolean check(Player p, String[] args) {
+	public Boolean check(CommandSender p, String[] args) {
 		CommandSender sender = p;
 		if (sender == null)
 			sender = Bukkit.getConsoleSender();
@@ -128,7 +128,7 @@ public class NPCCommandFrontend extends CommandFrontend {
 		return true;
 	}
 	
-	public Boolean toggle(Player p, String[] args) {
+	public Boolean toggle(CommandSender p, String[] args) {
 		CommandSender sender = p;
 		if (sender == null)
 			sender = Bukkit.getConsoleSender();
