@@ -24,8 +24,8 @@
 			<layout>default</layout>
 		</repository>
 		<repository>
-			<id>alta189-remote</id>
-			<url>http://repo.alta189.com/</url>
+			<id>jci-remote</id>
+			<url>http://jci.lincomlinux.org/plugin/repository/everything/</url>
 		</repository>
 		<repository>
 			<id>citizensnpcs-jenkins</id>
@@ -107,6 +107,7 @@
 			</plugin>
 		</plugins>
 	</build>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.bukkit</groupId>
@@ -117,7 +118,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.getspout</groupId>
-			<artifactId>spoutpluginapi</artifactId>
+			<artifactId>spoutplugin</artifactId>
 			<version>dev-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>compile</scope>
@@ -146,24 +147,10 @@
 		<dependency>
 			<groupId>net.citizensnpcs</groupId>
 			<artifactId>citizensapi</artifactId>
-			<version>2.0.1</version>
+			<version>2.0.4-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
-	<distributionManagement>
-		<!-- Publish versioned releases here -->
-		<repository>
-			<id>nexus</id>
-			<name>nexus.alta189</name>
-			<url>http://nexus.alta189.com/content/repositories/releases</url>
-		</repository>
 
-		<!-- Publish snapshots here -->
-		<snapshotRepository>
-			<id>nexus</id>
-			<name>nexus.alta189</name>
-			<url>http://nexus.alta189.com/content/repositories/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
 </project>
